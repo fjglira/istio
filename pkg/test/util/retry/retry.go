@@ -21,6 +21,7 @@ import (
 
 	"istio.io/istio/pkg/log"
 	"istio.io/istio/pkg/test"
+	"istio.io/istio/pkg/test/framework/resource"
 )
 
 var scope = log.RegisterScope("retry", "logs for retries")
@@ -170,7 +171,11 @@ func UntilComplete(fn RetriableFunc, options ...Option) (any, error) {
 	successes := 0
 	attempts := 0
 	var lasterr error
-	to := time.After(cfg.timeout)
+	settings, err := resource.SettingsFromCommandLine("retry")
+	if err != nil {
+		return nil, fmt.Errorf("failed reading test framework settings from commandline: %v", err)
+	}
+	to := time.After(time.Duration(float64(cfg.timeout) * settings.TimeoutMultiplier))
 	delay := cfg.delay
 	for {
 		if cfg.maxAttempts > 0 && attempts >= cfg.maxAttempts {

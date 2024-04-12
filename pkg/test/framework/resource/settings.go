@@ -181,6 +181,9 @@ type Settings struct {
 
 	// GatewayConformanceStandardOnly indicates that only the standard gateway conformance tests should be run.
 	GatewayConformanceStandardOnly bool
+
+	// TimeoutMultiplier is a multiplier for the default timeout for retry operations.
+	TimeoutMultiplier float64
 }
 
 // SkipVMs changes the skip settings at runtime
@@ -261,6 +264,7 @@ func (s *Settings) String() string {
 	result += fmt.Sprintf("MaxDumps:          						 %d\n", s.MaxDumps)
 	result += fmt.Sprintf("HelmRepo:          						 %v\n", s.HelmRepo)
 	result += fmt.Sprintf("GatewayConformanceStandardOnly: %v\n", s.GatewayConformanceStandardOnly)
+	result += fmt.Sprintf("TimeoutMultiplier:  					 %v\n", s.TimeoutMultiplier)
 	return result
 }
 
