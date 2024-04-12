@@ -212,4 +212,9 @@ func init() {
 	flag.BoolVar(&settingsFromCommandLine.GatewayConformanceStandardOnly, "istio.test.gatewayConformanceStandardOnly",
 		settingsFromCommandLine.GatewayConformanceStandardOnly,
 		"If set, only the standard gateway conformance tests will be run; tests relying on experimental resources will be skipped.")
+
+	flag.Float64Var(&settingsFromCommandLine.TimeoutMultiplier, "istio.test.timeoutMultiplier",
+		settingsFromCommandLine.TimeoutMultiplier,
+		`Specifies a multiplier to be used to extend or reduce the duration before a timeout occurs.
+		This modifies the timeout for testing framework retry operations. The default value is 1.0.`)
 }
