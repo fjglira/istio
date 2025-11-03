@@ -1,83 +1,55 @@
 # Validating your Istio Setups? The Tests Are Already Written
 
-## Table of Contents
-
-1. [Target Audience](#target-audience)
-2. [Introduction](#introduction)
-3. [Key Takeaways](#key-takeaways)
-4. [Lightning Talk Structure](#lightning-talk-structure)
-   - [1. Reusing Instead of Rewriting: The Case for Upstream Tests](#1-reusing-instead-of-rewriting-the-case-for-upstream-tests-2-minutes)
-   - [2. Real-World Example: Validating Istio on OpenShift](#2-real-world-example-validating-istio-on-openshift-3-minutes)
-   - [3. Real-World Example: Verifying External Control Plane with Sail Operator](#3-real-world-example-verifying-external-control-plane-with-sail-operator-3-minutes)
-   - [4. Giving Back: From User to Contributor](#4-giving-back-from-user-to-contributor-2-minutes)
-5. [Test Coverage Report & Selective Testing](#test-coverage-report--selective-testing)
-6. [Appendix: Quick Reference](#appendix-quick-reference)
-7. [Speaker Notes](#speaker-notes)
-
-## Target Audience
-
-**Target Audience:**
-* Site Reliability Engineers (SREs)
-* DevOps engineers
-* Platform engineers
-* Anyone involved in deploying, managing, and testing Istio service meshes.
-
 Note: Basic understanding of Kubernetes and Istio concepts assumed.
 
 ## Lightning Talk Structure
+
+The structure of this lightning talk is as follows:
+
+- Lightning Talk Topics Index
+
+1. Opening (30s)
+  - Welcome, context and goals
+  - Expected audience prerequisites
+
+2. High-level Motivation (1m)
+  - Why reuse upstream integration tests
+  - Benefits: speed, confidence, consistency, future-proofing
+
+3. Reusing Instead of Rewriting — The Case for Upstream Tests (2m)
+
+4. Real-World Example: Validating Istio on OpenShift (3m)
+
+5. Real-World Example: External Control Plane (Sail Operator) (3m)
+
+6. Installer Script Requirements (brief checklist) (1m)
+  - Support install and cleanup invocations
+  - Unchanged install behavior and cleanup semantics
+  - Logging, diagnostics, and exit codes
+
+7. Giving Back: From User to Contributor (1m)
+  - Using test logs for high-quality bug reports
+  - How to propose portability improvements and PRs
+
+
+Total: ~10 minutes
 
 ### Introduction
 
 Did you know that you can test your Istio deployments by reusing Istio's integration test framework? Instead of starting from scratch, I'll show how you can run these existing tests to verify that your setup works as expected. By leveraging what's already available, you can quickly catch problems, save time, and improve confidence in your environment. 
 We'll also cover how your experience running these tests can feed back into the Istio project, helping improve coverage and reliability for everyone.
 
-For anyone working with Istio, validating that things are working right—especially in non-standard environments—is essential. This talk shows how to use what's already there instead of building new tests from scratch. It's a simple but powerful way to save time, avoid duplication, and even give back to the project. We'll provide real examples like validating on OpenShift or running on Kubernetes with external control plane installers to show what this looks like in practice.
+For anyone working with Istio, validating that things are working right, especially in non-standard environments is essential. This talk shows how to use what's already there instead of building new tests from scratch. It's a simple but powerful way to save time, avoid duplication, and even give back to the project. We'll provide examples like validating on OpenShift or running on Kubernetes with external control plane installers to show what this looks like in practice.
 
 These are some of the key things you'll take away from this talk:
-- **Understand the efficiency** of reusing existing Istio integration tests to validate complex, custom environments, avoiding redundant effort
+- **Understand the efficiency** of reusing existing Istio integration tests to validate complex, custom environments, avoiding redundant effort.
 - **Learn practical methods** for adapting Istio's integration tests to fit specific cluster configurations, including examples on OpenShift and with external control planes installations. Make it fit your environment with minimal changes.
 - **Discover how contributing insights** from running these tests can directly enhance the upstream Istio project, benefiting the entire community
 
-To illustrate this, here's a simple flowchart comparing the traditional approach of writing custom tests from scratch versus reusing the existing Istio test framework.
+To illustrate this, here's a simple flowchart comparing the traditional approach of writing custom tests from scratch versus reusing the existing Istio test framework (Is in the ppt slides):
 
-```
----
-config:
-  layout: dagre
----
-flowchart LR
- subgraph subGraph0["The Hard Way (From Scratch)"]
-        B("Write New Tests")
-        A["You"]
-        C["Custom Test Suite"]
-        D(("Validate"))
-        E["Result: Slow, <br>Redundant"]
-  end
- subgraph subGraph1["The Smart Way (This Talk)"]
-        G("Adapt/Reuse Tests")
-        F["You"]
-        H["Istio Integration Test Framework"]
-        I(("Validate"))
-        J["Result: Fast, <br> Confident"]
-        K("Contribute Insights")
-        L["Upstream Istio Project"]
-  end
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    F --> G
-    G --> H
-    H --> I
-    I --> J
-    J --> K
-    K --> L
-    M["Your Custom Environment"] --> A & F
-```
 
-### 1. Reusing Instead of Rewriting: The Case for Upstream Tests (2 minutes)
-
-Validating a complex system like Istio is difficult and time-consuming
+### 1. Reusing Instead of Rewriting: The Case for Upstream Tests
 
 **The Problem with Custom Tests:**
 - Hard to maintain and often miss critical edge cases
@@ -87,27 +59,27 @@ Validating a complex system like Istio is difficult and time-consuming
 
 **The Smarter Approach:** Reuse integration tests from the Istio project itself, with this a powerful framework already built to cover a wide range of scenarios in your own environment. This means you get:
 - **Speed:** Leverage comprehensive test suite on day one without writing code. Minimizing setup time
-- **Confidence:** Upstream tests cover vast functionality matrix—traffic shifting, policy enforcement, telemetry, multi-cluster communication. This ensures that your deployment behaves as expected.
+- **Confidence:** Upstream tests cover vast functionality matrix: traffic shifting, policy enforcement, telemetry, multi-cluster communication. This ensures that your deployment behaves as expected.
 - **Consistency:** Align validation with project's own quality gates, if it passes upstream, it should pass in your environment too.
 - **Future-proof:** Rerun same tests after upgrades to catch regressions instantly.
 
-**Demo #1:**
+**Example**
 Prepare to run a basic Istio validation test against a standard Kubernetes cluster. We will need a kubernetes cluster running. The tests will install Istio automatically unless we specify otherwise. This means it will install Istio, run the tests, and then clean up.
 ```bash
 # Basic validation in one command
-go test -tags=integ ./tests/integration/pilot -run TestTraffic -v --istio.test.ci --test.timeout=30m
+go test -tags=integ ./tests/integration/pilot -run TestTraffic -v --istio.test.ci --test.timeout=90m
 ```
 
 What does this do?
 - Installs Istio core components (Istiod, ingress gateway)
 - Deploys sample applications (httpbin, sleep)
-- Runs traffic routing tests to ensure Istio is functioning correctly
+- Runs traffic routing tests to ensure Istio is working as expected on that cluster
 
 You can also use a variety of flags to customize the test run:
 ```bash
 --istio.test.kube.loadbalancer=false          # Use NodePort instead of LoadBalancer for ingress
 --istio.test.nocleanup                        # Preserve test setup for post-mortem analysis
---istio.test.log_output_level=debug          # Enable verbose logging for troubleshooting
+--log_output_level=tf:debug                   # Enable verbose logging for troubleshooting
 --istio.test.select +customsetup,-postsubmit  # Run only specific test categories
 ```
 
@@ -129,8 +101,21 @@ The complete list of flags is available in the Istio documentation [here](https:
 - Pruning removed resources
 ✔ Installation complete
 ...
-TODO: add the successful test output example
-
+    --- PASS: TestTraffic/virtualservice (42.33s)
+        --- PASS: TestTraffic/virtualservice/added_header (1.76s)
+            --- PASS: TestTraffic/virtualservice/added_header/a (0.60s)
+                --- PASS: TestTraffic/virtualservice/added_header/a/to_b (0.19s)
+                --- PASS: TestTraffic/virtualservice/added_header/a/to_tproxy (0.18s)
+                --- PASS: TestTraffic/virtualservice/added_header/a/to_vm (0.22s)
+            --- PASS: TestTraffic/virtualservice/added_header/tproxy (0.56s)
+                --- PASS: TestTraffic/virtualservice/added_header/tproxy/to_b (0.18s)
+                --- PASS: TestTraffic/virtualservice/added_header/tproxy/to_tproxy (0.18s)
+                --- PASS: TestTraffic/virtualservice/added_header/tproxy/to_vm (0.19s)
+            --- PASS: TestTraffic/virtualservice/added_header/vm (0.58s)
+                --- PASS: TestTraffic/virtualservice/added_header/vm/to_b (0.20s)
+                --- PASS: TestTraffic/virtualservice/added_header/vm/to_tproxy (0.18s)
+                --- PASS: TestTraffic/virtualservice/added_header/vm/to_vm (0.19s)
+        --- PASS: TestTraffic/virtualservice/set_header (1.60s)
 ```
 ### 2. Real-World Example: Validating Istio on OpenShift
 
@@ -140,10 +125,6 @@ TODO: add the successful test output example
 
 **Minimal Configuration Changes for OpenShift:**
 ```bash
-# Set OpenShift-specific kubeconfig
-export KUBECONFIG=/path/to/openshift/config
-
-# Adapt to Security Context Constraints (SCCs)
 go test -tags=integ ./tests/integration/security -run TestMTLS \
   --istio.test.kube.config=$KUBECONFIG \
   --istio.test.openshift \
@@ -163,14 +144,14 @@ Adding some flags enable us to adapt the tests to OpenShift's unique requirement
 - **Traffic routing** through OpenShift-specific ingress mechanisms
 - **Service mesh** functionality under stricter security
 
-### 3. Real-World Example: Verifying External Control Plane with Sail Operator (3 minutes)
+### 3. Real-World Example: Verifying External Control Plane
 
-**The Challenge:** Custom installers of Istio like Sail Operator - how can you be sure they deliver conformant Istio?
+**The Challenge:** Custom installers of Istio like Sail Operator. How can you be sure they deliver conformant Istio?
 A few months ago was merged a feature that allow us to manage external Istio control plane installations using the existing Istio integration test. This is very powerful, for example on Sail Operator we can use this to validate that the Istio installation done by Sail Operator is conformant with upstream Istio.
 
 To use this feature we just need to set:
-* --istio.test.kube.deploy=false : This will skip the Istio installation step
-* --istio.test.kube.controlPlaneInstaller=<path_to_your_installer> : This will point to the installer that will be used to manage the Istio control plane installation. For example: https://github.com/openshift-service-mesh/istio/blob/17574c9312708ac101c6026f2d5c9069fd580123/prow/setup/sail-operator-setup.sh
+* `--istio.test.kube.deploy=false` : This will skip the Istio installation step
+* `--istio.test.kube.controlPlaneInstaller=<path_to_your_installer>` : This will point to the installer that will be used to manage the Istio control plane installation. For example: https://github.com/openshift-service-mesh/istio/blob/17574c9312708ac101c6026f2d5c9069fd580123/prow/setup/sail-operator-setup.sh
 
 Take into account that skipping the installation mean that you need to handle all the related resources creation like for example the namespace creation, ingress gateway setup, istio cni if needed, etc.
 
@@ -193,8 +174,10 @@ The install process in your custom installer it will take the iop.yaml generated
 ### 4. Giving Back: From User to Contributor (2 minutes)
 
 **Your Experience is Valuable to the Entire Community**
+When you run these tests in your unique environment, you may encounter issues or gaps in coverage. Sharing these insights helps improve Istio for everyone.
 
 #### Filing High-Quality Bug Reports
+This gaps that you may find can be reported to the Istio project to help improve the test coverage and reliability. Here are some tips for filing effective reports:
 
 **Use Detailed Test Logs for Reproducible Reports:**
 ```bash
@@ -209,169 +192,23 @@ go test -tags=integ ./tests/integration/pilot \
 # - Proposed solutions or workarounds
 ```
 
-**Template for High-Quality Bug Reports:**
-```markdown
-## Environment
-- Platform: OpenShift 4.12
-- Istio: 1.19.0 via Sail Operator
-- Test Command: `go test -tags=integ ./tests/integration/security`
-
-## Failure
-[Paste complete test output]
-
-## Expected vs Actual
-Expected: Test passes on standard Kubernetes
-Actual: Fails on OpenShift due to SCC restrictions
-
-## Proposed Solution
-Add SCC-compatible test variant or configuration flag
-```
-
 #### Making Tests More Portable
 
-**Simple Process for Contributing Improvements:**
-```bash
-# Found a test that makes platform-specific assumptions?
-# 1. Fork istio/istio repository
-git clone https://github.com/your-username/istio.git
+### Portability and platform agnostic
 
-# 2. Create small PR to make test more robust
-# Example: Add conditional logic for OpenShift detection
-if isOpenShift() {
-    // Use route-based ingress validation
-} else {
-    // Use LoadBalancer-based validation
-}
+Istio is intended to be platform‑agnostic. Tests and production code should not hard‑wire platform‑specific behavior. Instead, where platform differences are required, prefer explicit, documented adapters or configuration flags so the same upstream tests and code paths can run across environments.
 
-# 3. Submit PR with clear description of issue and fix
-```
+Recommended guidance:
+- Avoid embedding platform-specific logic in core code or test cases; use feature flags, platform detectors, or test flags (e.g., --istio.test.openshift) to select adaptations.
+- Expose platform differences via configuration (Helm/iop values, env vars, or test flags) rather than code branches.
+- Implement small, well-documented adapters for platform-specific actions (CNI, route objects, SCCs) that the test harness can invoke when needed.
+- When you find a portability gap, prefer making the test harness/configuration pluggable; if code changes are required, open a focused PR with tests.
+- Document platform-specific requirements and recommended flags so users can reproduce test runs and file actionable bug reports.
 
-**Real Community Impact Examples:**
-- **ARM64 compatibility** improvements from edge computing users
-- **Air-gapped environment** adaptations from enterprise users
-- **Custom CNI** support from platform teams
-- **Security policy** enhancements from regulated industries
-
-**This Feedback Loop Strengthens Istio for Everyone**
-
-## Test Coverage Report & Selective Testing
-
-Based on your note about creating a testing report, here's a framework for categorizing tests by scenario:
-
-### Test Selection Matrix
-
-| Scenario | Core Tests | Security Tests | Network Tests | Install Tests |
-|----------|------------|----------------|---------------|---------------|
-| **Basic Validation** | `pilot/TestBasic` | `security/TestMTLS` | - | - |
-| **OpenShift** | `pilot/TestGateway` | `security/TestSCC` | `ambient/cni` | `helm/openshift` |
-| **External Control Plane** | `pilot/TestVirtualService` | `security/TestMTLS` | `pilot/multicluster` | - |
-| **Air-gapped** | `pilot/TestBasic` | `security/ca_custom_root` | - | `helm/offline` |
-| **Multi-cluster** | `pilot/multicluster` | `security/external_ca` | `ambient/multinetwork` | - |
-
-### Selective Test Execution Commands
-
-```bash
-# Basic environment validation (5-10 minutes)
-go test -tags=integ ./tests/integration/pilot -run "TestBasic|TestVirtualService" \
-  --istio.test.ci
-
-# Security-focused validation (10-15 minutes)
-go test -tags=integ ./tests/integration/security -run "TestMTLS|TestJWT" \
-  --istio.test.ci
-
-# Platform-specific validation (15-20 minutes)
-go test -tags=integ ./tests/integration/... \
-  --istio.test.select +customsetup,-postsubmit \
-  --istio.test.ci
-
-# Full conformance suite (30-45 minutes)
-go test -tags=integ ./tests/integration/pilot ./tests/integration/security \
-  --istio.test.ci
-```
-
-### Test Report Generation
-
-```bash
-# Generate detailed test report
-go test -tags=integ ./tests/integration/... \
-  --istio.test.ci \
-  -json > test-results.json
-
-# Parse results for coverage report
-jq '.[] | select(.Action=="pass" or .Action=="fail") | {Test: .Test, Result: .Action}' \
-  test-results.json > coverage-report.json
-```
-
-## Appendix: Quick Reference
-
-### Essential Commands Cheat Sheet
-
-```bash
-# Basic setup validation
-go test -tags=integ ./tests/integration/pilot -run TestBasic -v
-
-# Security validation
-go test -tags=integ ./tests/integration/security -run TestMTLS -v
-
-# Custom environment discovery
-go test -tags=integ ./tests/integration/... --istio.test.select +customsetup
-
-# Preserve setup for analysis
-go test -tags=integ [TEST_PATH] --istio.test.nocleanup
-
-# Enable verbose diagnostics
-go test -tags=integ [TEST_PATH] --istio.test.ci --log_output_level=debug
-
-# Skip installation, use existing Istio
-export ISTIO_TEST_SKIP_INSTALL=true
-```
-
-### Platform-Specific Configurations
-
-```bash
-# OpenShift
-export KUBECONFIG=/path/to/openshift/config
-go test -tags=integ ./tests/integration/ambient/cni --istio.test.ci
-
-# External Control Plane
-export ISTIO_TEST_SKIP_INSTALL=true
-go test -tags=integ ./tests/integration/pilot --istio.test.ci
-
-# Air-gapped Environment
-go test -tags=integ ./tests/integration/security/ca_custom_root \
-  --istio.test.hub=private-registry.com/istio
-```
-
-### Common Issues and Solutions
-
-| Issue | Symptom | Solution |
-|-------|---------|----------|
-| **LoadBalancer unavailable** | `no ingress` errors | Install MetalLB: `kubectl apply -f metallb.yaml` |
-| **ImagePullBackOff** | Pod startup failures | Configure registry: `--istio.test.hub=your-registry` |
-| **SCC violations** | Pod security errors | Use CNI tests: `./tests/integration/ambient/cni` |
-| **Custom CA issues** | mTLS failures | Run: `./tests/integration/security/ca_custom_root` |
-
-## Speaker Notes
-
-### Demo Preparation
-- [ ] OpenShift cluster ready with appropriate access
-- [ ] Sail Operator installation prepared
-- [ ] Test commands verified on both environments
-- [ ] GitHub issues page ready for contribution examples
-- [ ] Backup commands for common failure scenarios
-
-### Timing Guidelines
-- **Section 1 (2 min):** Focus on benefits, keep technical details minimal
-- **Section 2 (3 min):** Show real OpenShift failures and solutions
-- **Section 3 (3 min):** Demonstrate API conformance with Sail Operator
-- **Section 4 (2 min):** Emphasize community impact, keep specific
+These practices keep the upstream test suite reusable while allowing minimal, controlled adaptations to ensure Istio works reliably everywhere.
 
 ### Key Messages
 1. **Don't rebuild what exists** - Leverage upstream investment
 2. **Tests reveal environment specifics** - Turn challenges into insights
 3. **Your experience benefits everyone** - Community-driven improvement
 4. **Conformance matters** - Verify custom installations work correctly
-
----
-
-*This lightning talk demonstrates the practical value of reusing Istio's integration tests while contributing back to strengthen the entire ecosystem.*
