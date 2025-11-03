@@ -107,7 +107,7 @@ The complete list of flags is available in the Istio documentation [here](https:
 
 **Minimal Configuration Changes for OpenShift:**
 ```bash
-go test -tags=integ ./tests/integration/security -run TestMTLS \
+go test -tags=integ ./tests/integration/security -run TestMtlsGateways \
   --istio.test.kube.config=$KUBECONFIG \
   --istio.test.openshift \
   --istio.test.istio.enableCNI=true \
