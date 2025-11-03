@@ -6,33 +6,15 @@ Note: Basic understanding of Kubernetes and Istio concepts assumed.
 
 The structure of this lightning talk is as follows:
 
-- Lightning Talk Topics Index
-
 1. Opening (30s)
-  - Welcome, context and goals
-  - Expected audience prerequisites
-
 2. High-level Motivation (1m)
-  - Why reuse upstream integration tests
-  - Benefits: speed, confidence, consistency, future-proofing
-
 3. Reusing Instead of Rewriting — The Case for Upstream Tests (2m)
-
-4. Real-World Example: Validating Istio on OpenShift (3m)
-
+4. Real-World Example: Validating Istio on OpenShift (2m)
 5. Real-World Example: External Control Plane (Sail Operator) (3m)
-
 6. Installer Script Requirements (brief checklist) (1m)
-  - Support install and cleanup invocations
-  - Unchanged install behavior and cleanup semantics
-  - Logging, diagnostics, and exit codes
-
 7. Giving Back: From User to Contributor (1m)
-  - Using test logs for high-quality bug reports
-  - How to propose portability improvements and PRs
 
-
-Total: ~10 minutes
+Total: ~10 minutes and 30 seconds
 
 ### Introduction
 
