@@ -89,14 +89,14 @@ build_images() {
     # use ubuntu:noble to test vms by default
     nonDistrolessTargets="docker.app docker.app_sidecar_ubuntu_noble docker.ext-authz docker.ztunnel "
 
-    if [[ "${VARIANT:-default}" == "distroless" ]]; then
-        echo "Building distroless images"
-        DOCKER_ARCHITECTURES="${arch}" DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" make dockerx.pushx
-        DOCKER_ARCHITECTURES="${arch}" DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${nonDistrolessTargets}" make dockerx.pushx
-    else
-        echo "Building default images"
-        DOCKER_ARCHITECTURES="${arch}"  DOCKER_BUILD_VARIANTS="${VARIANT:-default}" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" make dockerx.pushx
-    fi
+    # Always build both default and distroless variants for core images.
+    # Different test suites require different variants (pilot/security/telemetry/ambient use
+    # default; helm uses distroless). When images are pre-built in CI and reused across suites,
+    # VARIANT is not known at build time, so both must be available.
+    echo "Building default images"
+    DOCKER_ARCHITECTURES="${arch}" DOCKER_BUILD_VARIANTS="default" DOCKER_TARGETS="${targets} ${nonDistrolessTargets}" make dockerx.pushx
+    echo "Building distroless images"
+    DOCKER_ARCHITECTURES="${arch}" DOCKER_BUILD_VARIANTS="distroless" DOCKER_TARGETS="${targets}" make dockerx.pushx
 }
 
 # Define the artifacts directory
