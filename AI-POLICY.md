@@ -45,6 +45,7 @@ The Istio project expects AI tools to be used responsibly in contributions. Thes
 * Contributors must review and verify AI-generated content and be able to explain the changes they submit.
 * Contributors should distinguish ordinary assistance from substantial AI-generated content and disclose substantial use as described in this policy.
 * AI tools must not replace direct human participation in issue, pull request, or review discussions, as described in [Issues, PRs, Reviews and any kind of Contribution](#issues-prs-reviews-and-any-kind-of-contribution).
+* AI tools must not impersonate the contributor. Comments, replies, descriptions, and any other project communication must be written and answered by a human, and AI bots or automated systems must not post on a contributor's behalf. See [AI Policy Violation and Unacceptable Use of AI](#ai-policy-violation-and-unacceptable-use-of-ai).
 * Contributions should meet the project's standards regardless of how they were produced. Unreviewed or low quality contributions may be rejected; see [AI Policy Violation and Unacceptable Use of AI](#ai-policy-violation-and-unacceptable-use-of-ai).
 
 
