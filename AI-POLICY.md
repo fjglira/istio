@@ -1,6 +1,6 @@
 # Istio AI Policy
 
-Istio is a project that welcomes any contributions, including those that are assited by AI tools. Contributors to the project are able to use AI tools to assist in their work, but they remain fully responsible for the content they submit.
+Istio is a project that welcomes any contributions, including those that are assisted by AI tools. Contributors to the project are able to use AI tools to assist in their work, but they remain fully responsible for the content they submit.
 
 This policy shows how the Istio project expects contributors to use AI tools responsibly. It outlines the principles, requirements, and best practices for AI-assisted contributions.
 
@@ -35,7 +35,7 @@ To set a baseline, let's define some key terms related to the AI use:
 * **Assistance:** Help from AI tools, such as autocomplete suggestions, grammar fixes, or recommendations. Assistance may also include code or text generation; whether that content is substantial depends on how much of it is included in a contribution.
 * **Generated content or substantial AI contribution:** Content produced by an AI tool and intended for inclusion in a contribution. A contribution is considered substantially AI-generated when an AI tool produces most or all of it.
 
-Based on this definitions the contributors are going to be responsible for distinguising between what is assistance and what is a substancial AI-generated contribution. They must ensure that any substantial AI-generated content is properly reviewed, verified, and disclosed according to this policy.
+Based on these definitions the contributors are going to be responsible for distinguishing between what is assistance and what is a substantial AI-generated contribution. They must ensure that any substantial AI-generated content is properly reviewed, verified, and disclosed according to this policy.
 
 ## Core Principles
 
@@ -62,7 +62,7 @@ AI disclosure: Used AI tools to generate substantial content.
 AI disclosure: Used AI tools to generate substantial content. Reviewed and verified by human contributor.
 ```
 
-We expect contributors to provide such disclosure. If the content of the contribution was created or asisted by AI tools but the human review and process was thorough and verified, it should be indicated as such in the disclosure, that will give the reviewers confidence that the contribution meets the project's standards. Be transparent about the role of AI in your contribution is the best practice.
+We expect contributors to provide such disclosure. If the content of the contribution was created or assisted by AI tools but the human review and process was thorough and verified, it should be indicated as such in the disclosure, that will give the reviewers confidence that the contribution meets the project's standards. Be transparent about the role of AI in your contribution is the best practice.
 
 ## Issues, PRs, Reviews and any kind of Contribution
 
@@ -75,15 +75,15 @@ AI tools may be really helpful for assisting any of the work that is done at the
 * Assist in drafting specification updates or code before submission. You must review every line, verify the content, and revise and simplify it as much as possible before submitting.
 * Do copy editing or grammar refinement of text you have written.
 
-The uses described before and others that can apply to your contributions should always be carefully reviewed by human contributor to ensure that the content generated is accurated and complete. From the Istio project we are ok with the use of the AI tools in any of the described scenarios or similar cases as long the human contrutor is:
+The uses described before and others that can apply to your contributions should always be carefully reviewed by human contributor to ensure that the content generated is accurate and complete. From the Istio project we are ok with the use of the AI tools in any of the described scenarios or similar cases as long the human contributor is:
 
 * Involved in the whole process of creating the contribution.
 * Reviewing and verifying all AI-generated content for accuracy and completeness.
 * It understand the content and the context of the contributors and it's able to answer any question related.
-* Take the reponsability of the content submitted.
+* Take responsibility for the content submitted.
 * Report or disclose the use of AI tools in the contribution. Please take a look to the [AIL framework](https://danielmiessler.com/blog/ai-influence-level-ail) to understand the level of AI influence in your contribution.
 
-Please besides adding a disclosure of the use of AI to the created contribution, you can also label the contribution with the appropriate AI influence level according to the [AIL framework](https://danielmiessler.com/blog/ai-influence-level-ail). That can give reviewers and other contributors a clearer understanding of the extent to which AI tools influenced the contribution. For example adding a label suc as "AIL-2" indicates that an human created the contribution with augmented assistance from AI tools. Adding those labels will help us at the Istio project to evolve this policy and maintain transparency in the use of AI tools.
+Please besides adding a disclosure of the use of AI to the created contribution, you can also label the contribution with the appropriate AI influence level according to the [AIL framework](https://danielmiessler.com/blog/ai-influence-level-ail). That can give reviewers and other contributors a clearer understanding of the extent to which AI tools influenced the contribution. For example adding a label such as "AIL-2" indicates that an human created the contribution with augmented assistance from AI tools. Adding those labels will help us at the Istio project to evolve this policy and maintain transparency in the use of AI tools.
 
 
 ## AI Policy Violation and Unacceptable Use of AI
@@ -104,8 +104,8 @@ Which are the scenarios where we think that AI tools usage would be considered u
 * Misrepresenting AI-generated content as entirely human-created. Being honest with the community about the use of AI it's more important than trying to hide it.
 * Using AI tools to bypass the human review and verification process.
 * Repeatedly providing inaccurate or incomplete AI-generated content without proper human review.
-* Submitting content without the proper human review and verfication.
+* Submitting content without the proper human review and verification.
 * Using AI tools to generate content that violates the Istio Code of Conduct or other community guidelines.
-* Only rely on AI tools to problem solving, archiecture design and other technical decisions as an aid, not as a replacement for human judgment and review.
+* Only rely on AI tools to problem solving, architecture design and other technical decisions as an aid, not as a replacement for human judgment and review.
 
 We from the Istio project care about the community and his contributions and as everyone is evolving with the use of AI we are evolving as well. We encourage a responsible and transparent use of AI tools, always ensuring that human review and verification is always part of the process.
