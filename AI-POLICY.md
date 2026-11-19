@@ -67,44 +67,28 @@ We expect contributors to provide such disclosure. If the content of the contrib
 
 ## Issues, PRs, Reviews and any kind of Contribution
 
-AI tools may be really helpful for assisting any of the work that is done at the Istio project, they can be used to:
+AI tools may assist with Istio contributions by helping contributors understand the project, brainstorm ideas, analyze submissions, summarize verified information, draft code or specifications, and edit text. These uses are acceptable as long as the contributor reviews and verifies AI-generated content before submission. Design documents and other substantial design content require a high level of human involvement and careful review by contributors, maintainers, and reviewers.
 
-* Get context or specific information about the project, such as summarizing or understanding the codebase or a specification. This includes uses of AI tools whose output is only viewed by you.
-* Brainstorm ideas for code or specification updates, such as Feature Requests, before you write the code or specification update yourself.
-* Analyze your own submissions.
-* Summarize existing facts as part of a design document. You are responsible for verifying that all facts are correct and that references exist. A good design document is accurate, well referenced, and clearly explains the proposed changes. AI-generated content may contain inaccuracies or unsupported claims, so contributors should carefully verify and correct it. Reviewers may also apply additional scrutiny when AI use is disclosed.
-* Assist in drafting specification updates or code before submission. You must review every line, verify the content, and revise and simplify it as much as possible before submitting.
-* Do copy editing or grammar refinement of text you have written.
+Contributors must review and verify AI-generated content, understand and be able to explain their changes, and take responsibility for what they submit. 
 
-The uses described before and others that can apply to your contributions should always be carefully reviewed by human contributor to ensure that the content generated is accurate and complete. From the Istio project we are ok with the use of the AI tools in any of the described scenarios or similar cases as long the human contributor is:
-
-* Involved in the whole process of creating the contribution.
-* Reviewing and verifying all AI-generated content for accuracy and completeness.
-* It understand the content and the context of the contributors and it's able to answer any question related.
-* Take responsibility for the content submitted.
-* Report or disclose the use of AI tools in the contribution. Please take a look to the [AIL framework](https://danielmiessler.com/blog/ai-influence-level-ail) to understand the level of AI influence in your contribution.
-
-Please besides adding a disclosure of the use of AI to the created contribution, you can also label the contribution with the appropriate AI influence level according to the [AIL framework](https://danielmiessler.com/blog/ai-influence-level-ail). That can give reviewers and other contributors a clearer understanding of the extent to which AI tools influenced the contribution. For example adding a label such as "AIL-2" indicates that an human created the contribution with augmented assistance from AI tools. Adding those labels will help us at the Istio project to evolve this policy and maintain transparency in the use of AI tools.
+If AI tools generated substantial content for a contribution, disclose that use in the PR description, as explained in the [Disclosure](#disclosure) section. If there is no PR, include the disclosure in an appropriate location with the contribution. Contributors may also use labeling based on the [AIL framework](https://danielmiessler.com/blog/ai-influence-level-ail) (for example, `AIL-2`) to indicate AI's influence in their contributions.
 
 
 ## AI Policy Violation and Unacceptable Use of AI
 
-Any member of the community should expect to be asked by maintainers or other leadership member at any time during their participation whether they are using AI tools, and that they should respond honestly. This is key for the project to keep the trust of their contributions intact and ensure the integrity of the collaborative process.
+Maintainers or project leaders may ask contributors whether they used AI tools. Contributors are expected to answer honestly to preserve trust and the integrity of the collaborative process.
 
-However we think is important to emphasize the following:
-* Please don't publicly accuse someone of using AI based on their writing style or other factors. If you have concerns, contact the maintainers privately so they can talk with the community member. Remember that we at the Istio project value trust and integrity in our community interactions. Remember the [CNCF code of conduct](https://www.cncf.io/conduct/) as well.
-* A single mistake won't lead to serious consequences. However, repeated or intentional misrepresentation of AI tool usage will be taken seriously. Contributors who misrepresent their use of AI tools are not welcome in this community.
+Please don't publicly accuse someone of using AI based on writing style or other factors. Share concerns privately with maintainers, and follow the [CNCF Code of Conduct](https://www.cncf.io/conduct/). A single mistake won't lead to serious consequences, but repeated or intentional misrepresentation will be taken seriously.
 
 Violations of this policy may result in consequences such as:
 
 * Closing PRs or issues
 * Banning contributors from participating in the project.
 
-Which are the scenarios where we think that AI tools usage would be considered unacceptable or a violation of this policy. These include, but are not limited to:
-* Communication using AI tools to impersonate or replace the contributor in any project related content. This include the use of AI bots or any other automated system to post on behalf of the contributor. We expect, as we mention before, that we are talking with another human when interacting in the Istio project.
-* Misrepresenting AI-generated content as entirely human-created. Being honest with the community about the use of AI it's more important than trying to hide it.
-* Using AI tools to bypass the human review and verification process.
-* Repeatedly providing inaccurate or incomplete AI-generated content without proper human review.
+The following are examples of unacceptable use and policy violations:
+* Using AI or automated systems to impersonate a contributor or post on their behalf. Project communications must come from a human.
+* Misrepresenting AI-generated content as entirely human-created.
+* Using AI to bypass human review and verification, or repeatedly submitting inaccurate or incomplete AI-generated content without proper review.
 * Submitting content without the proper human review and verification.
 * Using AI tools to generate content that violates the Istio Code of Conduct or other community guidelines.
 * Only rely on AI tools to problem solving, architecture design and other technical decisions as an aid, not as a replacement for human judgment and review.
