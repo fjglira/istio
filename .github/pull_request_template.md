@@ -24,3 +24,7 @@
 **Please check any characteristics that apply to this pull request.**
 
 - [ ] Does not have any [user-facing](https://github.com/istio/istio/tree/master/releasenotes#when-to-add-release-notes) changes. This may include CLI changes, API changes, behavior changes, performance improvements, etc.
+
+**AI usage**
+
+- [ ] I have read the [AI Policy](https://github.com/istio/istio/blob/master/AI-POLICY.md). If AI tools were used to produce this PR, I have disclosed it here, and I have reviewed, tested, and can explain every change.
